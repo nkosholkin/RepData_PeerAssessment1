@@ -21,7 +21,7 @@ table <- tapply(activity$steps, activity$date, sum)
 hist(table, main = NULL, xlab="Total number of steps per day (not including missing values)")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+![plot of chunk Total_number_of_steps_per_day_frequency](figure/Total_number_of_steps_per_day_frequency.png) 
 
 ### Calculate and report the mean and median total number of steps taken per day
 
@@ -43,7 +43,7 @@ table2 <- ddply(activity, .(interval), summarize, steps = mean(steps, na.rm=TRUE
 plot(table2, type = 'l', main = "Average Steps by interval all days")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+![plot of chunk Average_steps_by_interval_per_day](figure/Average_steps_by_interval_per_day.png) 
 
 ```r
 maxSteps <- max(table2$steps)
@@ -84,7 +84,7 @@ tableNoNA <- tapply(activityNoNA$steps, activityNoNA$date, sum)
 hist(tableNoNA, main=NULL, xlab="Total number of steps per day (without missing values)")
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
+![plot of chunk Total_number_of_steps_per_day_frequency_substitute_missing_values](figure/Total_number_of_steps_per_day_frequency_substitute_missing_values.png) 
 
 Calculating mean and median for data without NA
 
@@ -115,6 +115,6 @@ plot(meanStepsWeekday, type = 'l', main = "Average steps on Weekdays", ylim = c(
 plot(meanStepsWeekend, type = 'l', main = "Average steps on Weekdend", ylim = c(0, 250))
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
+![plot of chunk Compare_weekday_and_weekends](figure/Compare_weekday_and_weekends.png) 
 
 We can see that on weekend activity is spread across all day compare to some descrease in the middle of weekday

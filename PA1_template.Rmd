@@ -16,7 +16,7 @@ activity <- read.csv("activity.csv")
 
 ### Make a histogram of the total number of steps taken each day
 
-```{r}
+```{r Total_number_of_steps_per_day_frequency}
 table <- tapply(activity$steps, activity$date, sum)
 hist(table, main = NULL, xlab="Total number of steps per day (not including missing values)")
 ```
@@ -34,7 +34,7 @@ The mean steps are 10766.19 and median 10765.
 
 ## What is the average daily activity pattern?
 
-```{r}
+```{r Average_steps_by_interval_per_day}
 table2 <- ddply(activity, .(interval), summarize, steps = mean(steps, na.rm=TRUE))
 plot(table2, type = 'l', main = "Average Steps by interval all days")
 ```
@@ -54,7 +54,7 @@ totalMissingValues <- sum(is.na(activity))
 Total missing values: 2304  
 
 Strategy for filling missing data: mean for particular 5-minute interval for each NA
-```{r}
+```{r Total_number_of_steps_per_day_frequency_substitute_missing_values}
 activityNoNA <- activity
 n <- 0
 for (i in activityNoNA[, 1]) {
@@ -85,7 +85,7 @@ medianStepsNoNA <- median(summaryDataNoNA$steps, na.rm = TRUE)
 The new value of mean is the same - 10766.19 and the mean a bit bigger 10766.19 compare to 10765
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r}
+```{r Compare_weekday_and_weekends}
 activityNoNA$day <- weekdays(as.Date(activityNoNA$date))
 # Subset workdays
 weekday <- subset(activityNoNA, activityNoNA$day %in% c("Monday","Tuesday", 
