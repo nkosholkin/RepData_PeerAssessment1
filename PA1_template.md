@@ -4,7 +4,8 @@
 
 First, set your working directory with the "activity.csv" file then load data
 
-```{r}
+
+```r
 activity <- read.csv("activity.csv")
 ```
 
@@ -12,14 +13,18 @@ activity <- read.csv("activity.csv")
 
 ### Make a histogram of the total number of steps taken each day
 
-```{r}
+
+```r
 table <- tapply(activity$steps, activity$date, sum)
 hist(table, main = NULL, xlab="Total number of steps per day (not including missing values)")
 ```
 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+
 ### Calculate and report the mean and median total number of steps taken per day
 
-```{r}
+
+```r
 library(plyr)
 summaryData <- ddply(activity, .(date), summarize, steps = sum(steps))
 meanSteps <- mean(summaryData$steps, na.rm = TRUE)
@@ -30,11 +35,15 @@ The mean steps are 10766.19 and median 10765.
 
 ## What is the average daily activity pattern?
 
-```{r}
+
+```r
 table2 <- ddply(activity, .(interval), summarize, steps = mean(steps, na.rm=TRUE))
 plot(table2, type = 'l', main = "Average Steps by interval all days")
 ```
-```{r}
+
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+
+```r
 maxSteps <- max(table2$steps)
 maxInterval <- table2[table2$steps == maxSteps, 1]
 ```
@@ -43,14 +52,16 @@ Maximum (206.1698) steps are on 835th interval
 
 ## Imputing missing values
 
-```{r}
+
+```r
 totalMissingValues <- sum(is.na(activity))
 ```
 
 Total missing values: 2304  
 
 Strategy for filling missing data: mean for particular 5-minute interval for each NA
-```{r}
+
+```r
 activityNoNA <- activity
 n <- 0
 for (i in activityNoNA[, 1]) {
@@ -71,8 +82,11 @@ tableNoNA <- tapply(activityNoNA$steps, activityNoNA$date, sum)
 hist(tableNoNA, main=NULL, xlab="Total number of steps per day (without missing values)")
 ```
 
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
+
 Calculating mean and median for data without NA
-```{r}
+
+```r
 summaryDataNoNA <- ddply(activityNoNA, .(date), summarize, steps = sum(steps))
 meanStepNoNA <- mean(summaryDataNoNA$steps, na.rm = TRUE)
 medianStepsNoNA <- median(summaryDataNoNA$steps, na.rm = TRUE)
@@ -81,7 +95,8 @@ medianStepsNoNA <- median(summaryDataNoNA$steps, na.rm = TRUE)
 The new value of mean is the same - 10766.19 and the mean a bit bigger 10766.19 compare to 10765
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r}
+
+```r
 activityNoNA$day <- weekdays(as.Date(activityNoNA$date))
 # Subset workdays
 weekday <- subset(activityNoNA, activityNoNA$day %in% c("Monday","Tuesday", 
@@ -97,5 +112,7 @@ par(mfrow = c(2,1), mar = c(4, 4, 4, 1))
 plot(meanStepsWeekday, type = 'l', main = "Average steps on Weekdays", ylim = c(0, 250))
 plot(meanStepsWeekend, type = 'l', main = "Average steps on Weekdend", ylim = c(0, 250))
 ```
+
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
 
 We can see that on weekend activity is spread across all day compare to some descrease in the middle of weekday
