@@ -5,6 +5,8 @@
 First, set your working directory with the "activity.csv" file then load data
 
 
+
+
 ```r
 activity <- read.csv("activity.csv")
 ```
